@@ -46,13 +46,13 @@ class BumpsDataset(Dataset):
     def __getitem__(self, idx):
         return self.data[idx],self.labels[idx]
 
-def get_data_loaders(args, kwargs):
+def get_data_loaders(batch_size, test_batch_size): # args, kwargs):
 
-    train_dataset = BumpsDataset(type='train',num_training = args.num_training)
-    val_dataset = BumpsDataset(type='val',num_training = args.num_training)
-    test_dataset = BumpsDataset(type='test',num_training = args.num_training)
+    train_dataset = BumpsDataset(type='train')
+    val_dataset = BumpsDataset(type='val')
+    test_dataset = BumpsDataset(type='test')
 
-    train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True, **kwargs)
-    val_loader = torch.utils.data.DataLoader(val_dataset, batch_size=args.test_batch_size, shuffle=False, **kwargs)
-    test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=args.test_batch_size, shuffle=False, **kwargs)
+    train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
+    val_loader = torch.utils.data.DataLoader(val_dataset, batch_size=test_batch_size, shuffle=False)
+    test_loader = torch.utils.data.DataLoader(test_dataset, batch_size=test_batch_size, shuffle=False)
     return train_loader, val_loader, test_loader
